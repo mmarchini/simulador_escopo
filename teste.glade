@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <object class="GtkWindow" id="window1">
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkLayout" id="layout1">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkButton" id="button1">
+            <property name="label" translatable="yes">+1</property>
+            <property name="use_action_appearance">False</property>
+            <property name="width_request">101</property>
+            <property name="height_request">29</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="use_action_appearance">False</property>
+            <signal name="clicked" handler="teste" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">37</property>
+            <property name="y">80</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label1">
+            <property name="width_request">105</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Número de clicks:</property>
+          </object>
+          <packing>
+            <property name="x">6</property>
+            <property name="y">44</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="entry1">
+            <property name="width_request">47</property>
+            <property name="height_request">23</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="invisible_char">1</property>
+            <property name="width_chars">5</property>
+            <property name="caps_lock_warning">False</property>
+          </object>
+          <packing>
+            <property name="x">115</property>
+            <property name="y">42</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
