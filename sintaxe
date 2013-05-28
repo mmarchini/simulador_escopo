@@ -1,0 +1,21 @@
+types=[int, float, str, char, bool];
+operators=[+,-,*,/,>[=],<[=],==,|,&];
+other_stuff=[(,),","];
+var variableName:types;
+var *variableName:types;
+def functionName(functionParams:types){
+}
+print something;
+
+
+example:
+var foo:int;
+var boo:float=0.0;
+def lala(kk:float){
+    return kk*kk;
+}
+
+print lala(boo);
+foo=1;
+print foo;
+
