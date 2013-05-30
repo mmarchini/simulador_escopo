@@ -1,9 +1,9 @@
-types=[int, float, str, char, bool];
-operators=[+,-,*,/,>[=],<[=],==,|,&];
-other_stuff=[(,),","];
-var variableName:types;
-var *variableName:types;
-types: functionName(functionParams:types){
+types=[int, float, str, char, bool]
+operators=[+,-,*,/,>[=],<[=],==,|,&]
+other_stuff=[(,),","]
+var variableName:types
+var *variableName:types
+types functionName(functionParams:types){
 }
 print something;
 if(){
