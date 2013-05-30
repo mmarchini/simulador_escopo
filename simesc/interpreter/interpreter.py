@@ -1,17 +1,14 @@
 #coding=UTF-8
 import re
+from memory import Memory
 
-class Interpreter:
+class Interpreter(Memory):
     '''
     Classe abstrata que define os métodos e atributos básicos para um interpretador
     '''
     ##############
     # Attributes #
     ##############
-    __code__ = []
-    __position__ = 0
-    __stack__ = []
-    __memory__ = {}
 
     ############################
     # Constructors/Destructors #
@@ -23,22 +20,6 @@ class Interpreter:
     ###########
     # Getters #
     ###########
-    
-    @property
-    def code(self):
-        return self.__code__
-
-    @property
-    def position(self):
-        return self.__position__
-        
-    @property
-    def stack(self):
-        return self.__stack__
-
-    @property
-    def memory(self):
-        return self.__memory__
     
     ###########
     # Setters #

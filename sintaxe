@@ -3,9 +3,12 @@ operators=[+,-,*,/,>[=],<[=],==,|,&];
 other_stuff=[(,),","];
 var variableName:types;
 var *variableName:types;
-def functionName(functionParams:types){
+types: functionName(functionParams:types){
 }
 print something;
+if(){
+}else{
+}
 
 
 example:

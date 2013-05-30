@@ -1,8 +1,9 @@
+#encoding=UTF-8
 #!/usr/bin/env python
 
 import gtk
 
-class  Teste:
+class  Teste:    
     def __init__(self):
         # Carrega o template feito no glade
         filename = "teste.glade"

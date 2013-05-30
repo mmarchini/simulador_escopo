@@ -1,5 +1,5 @@
 #coding=UTF-8
-import interpreter
+from interpreter import Interpreter
 
 class StaticInterpreter(Interpreter):
 
