@@ -6,9 +6,6 @@ class Interpreter(Memory):
     '''
     Classe que define os métodos e atributos básicos para um interpretador
     '''
-    ##############
-    # Attributes #
-    ##############
 
     ###############
     # Constructor #
@@ -16,18 +13,6 @@ class Interpreter(Memory):
 
     def __init__(self, code=None,  ):
         pass
-
-    ###########
-    # Getters #
-    ###########
-    
-    ###########
-    # Setters #
-    ###########
-
-    #################
-    # Class Methods #
-    #################
 
     ############################
     # Instance Private Methods #

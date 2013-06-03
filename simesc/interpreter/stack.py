@@ -4,6 +4,9 @@ Implementação de uma classe de Pilha parametrizada
 """
 
 class Stack(object):
+    ##############
+    # Attributes #
+    ##############
     __type__ = None
     __stack__ = []
     
@@ -19,3 +22,7 @@ class Stack(object):
     @property
     def stack(self):
         pass
+
+    def search(self, key):
+        pass
+
