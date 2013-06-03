@@ -4,15 +4,15 @@ from memory import Memory
 
 class Interpreter(Memory):
     '''
-    Classe abstrata que define os métodos e atributos básicos para um interpretador
+    Classe que define os métodos e atributos básicos para um interpretador
     '''
     ##############
     # Attributes #
     ##############
 
-    ############################
-    # Constructors/Destructors #
-    ############################
+    ###############
+    # Constructor #
+    ###############
 
     def __init__(self, code=None,  ):
         pass
@@ -62,4 +62,3 @@ class Interpreter(Memory):
 
     def reload_code(self, code):
         pass
-

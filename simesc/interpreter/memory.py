@@ -58,3 +58,11 @@ class Memory(object):
     @mount.setter
     def mount(self, value):
         self.__mount__ = value
+
+    ####################
+    # Abstract Methods #
+    ####################
+    
+    @abstractmethod
+    def load_memory(self, memory):
+        pass
