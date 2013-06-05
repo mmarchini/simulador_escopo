@@ -1,24 +1,22 @@
-types=[int, float, str, char, bool]
-operators=[+,-,*,/,>[=],<[=],==,|,&]
-other_stuff=[(,),","]
-var variableName:types
-var *variableName:types
-types functionName(functionParams:types){
-}
-print something;
-if(){
-}else{
-}
+types=[int, float];
+aoperators=[+ - * / =];
+boperators=[> < == | &];
+type variableName;
+types functionName():
+endfunc
+print something
+if():
+else:
+endif
 
 
 example:
-var foo:int;
-var boo:float=0.0;
+var foo:int
+var boo:float=0.0
 def lala(kk:float){
-    return kk*kk;
+    return kk*kk
 }
-
-print lala(boo);
-foo=1;
-print foo;
+print lala(boo)
+foo=1
+print foo
 

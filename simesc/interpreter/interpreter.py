@@ -2,6 +2,10 @@
 import re
 from memory import Memory
 
+
+
+"[[\+\-\*\/>[=]{0,1} <[=]{0,1} =[=]{0,1} & |] ]*"
+
 class Interpreter(Memory):
     '''
     Classe que define os métodos e atributos básicos para um interpretador
@@ -18,7 +22,7 @@ class Interpreter(Memory):
     # Instance Private Methods #
     ############################
 
-    def __syntax_analyzer__(self):
+    def __syntax_analyzer(self):
         pass 
 
     ##############################
@@ -28,14 +32,15 @@ class Interpreter(Memory):
     def _increment_position_(self):
         self.position = self.position+1
 
-    def _eval_current_lite_(self): 
-        self._eval_line_(self.position)
+    def _eval_current_lite(self): 
+        self._eval_line(self.position)
 
-    def _eval_line_(self, i):
-        self._eval_(self.code[self.position])
+    def _eval_line(self, i):
+        self._eval(self.code[self.position])
 
-    def _eval_(self, code):
-        pass
+    def _eval(self, code):
+        if re.compile("").match(code):
+            pass
 
     ###########################
     # Instance Public Methods #
