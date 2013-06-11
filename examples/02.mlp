@@ -1,0 +1,15 @@
+int var1
+int var2
+int var3
+
+int func1(int var1, int var2):
+    int var3
+    var3 = var1*var2
+    return var3
+endfunc
+
+var1 = 2
+var2 = 5
+
+var3 = func1(var1, var2)
+
