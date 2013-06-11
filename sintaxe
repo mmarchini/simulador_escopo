@@ -9,14 +9,3 @@ if():
 else:
 endif
 
-
-example:
-var foo:int
-var boo:float=0.0
-def lala(kk:float){
-    return kk*kk
-}
-print lala(boo)
-foo=1
-print foo
-

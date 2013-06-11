@@ -2,17 +2,20 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 from stack import Stack
 
 class MemoryFrame(object):
-    __callback__ = -1
-    __function_name__ = ""
-    __variables__ = []
+    __callback = -1
+    __function_name = ""
+    return_var = None
+    parameters = []
 
     ###############
     # Constructor #
     ###############    
     
-    def __init__(self, callback, function_name):
+    def __init__(self, callback, function_name, parameters, returnvar=None):
         self.callback = callback
         self.function_name = function_name
+        self.return_var = returnvar 
+        self.parameters=parameters
     
     ###########
     # Getters #
@@ -20,15 +23,11 @@ class MemoryFrame(object):
     
     @property
     def callback(self):
-        return self.__callback__
+        return self.__callback
 
     @property
     def function_name(self):
-        return self.__function_name__
-        
-    @property
-    def variables(self):
-        return self.__variables__
+        return self.__function_name
 
     ###########
     # Setters #
@@ -36,27 +35,22 @@ class MemoryFrame(object):
 
     @callback.setter
     def callback(self, value):
-        self.__callback__ = value
+        self.__callback = value
 
     @function_name.setter
     def function_name(self, value):
-        self.__function_name__ = value
+        self.__function_name = value
         
-    @variables.setter
-    def variables(self, value):
-        self.__variables__ = value
-
-class MemoryReference(object):
-    __type__ = None
-    __value__ = None
-    
-    def __init__(self, type, value=0):
-        pass
-    
 class Variable(object):
-    __name__ = ""
-    __type__ = None
-    __value__ = None
+    name = ""
+    vartype = None
+    value = 0 
+    scope=[]
+
+    def __init__(self, name, vartype, scope):
+        self.name = name
+        self.vartype = vartype
+        self.scope = scope
 
 class Memory(object):
     __metaclass__ = ABCMeta
@@ -64,11 +58,10 @@ class Memory(object):
     ##############
     # Attributes #
     ##############
-    __position__ = 0
-    __code__ = []
-    __stack__ = None
-    __mount__ = None
-    __variables__ = []
+    __position = 0
+    __code = []
+    __stack = None
+    __mount = None
     
     ###############
     # Constructor #
@@ -76,7 +69,7 @@ class Memory(object):
     
     def __init__(self, code=None):
         self.stack = Stack(MemoryFrame)
-        self.mount = Stack(MemoryReference)
+        self.mount = Stack(Variable)
         
         self.code = code
         
@@ -86,19 +79,23 @@ class Memory(object):
     
     @property
     def code(self):
-        return self.__code__
+        return self.__code
 
     @property
     def position(self):
-        return self.__position__
+        return self.__position
         
     @property
     def stack(self):
-        return self.__stack__
+        return self.__stack
 
     @property
     def mount(self):
-        return self.__mount__
+        return self.__mount
+
+    @abstractproperty
+    def variables(self):
+        pass
     
     ###########
     # Setters #
@@ -107,28 +104,29 @@ class Memory(object):
     @code.setter
     def code(self, value):
         if type(value) == str or type(value) == unicode:
-            self.__code__ = value.split("\n")
+            self.__code = value.split("\n")
         elif type(value) == list:
-            self.__code__ = value
+            self.__code = value
         else:
             raise TypeError
 
     @position.setter
     def position(self, value):
-        self.__position__ = value
+        self.__position = value
         
     @stack.setter
     def stack(self, value):
-        self.__stack__ = value
+        self.__stack = value
 
     @mount.setter
     def mount(self, value):
-        self.__mount__ = value
+        self.__mount = value
 
     ####################
     # Abstract Methods #
     ####################
     
     @abstractmethod
-    def load_memory(self, memory):
+    def define_variable(self):
         pass
+
