@@ -1,6 +1,8 @@
 #coding=UTF-8
 
+import functional
 from gi.repository import Gtk
+
 from simesc.interpreter import util
 from simesc.interpreter import DynamicInterpreter, StaticInterpreter
 
@@ -59,6 +61,7 @@ class MainWindow(object):
 
     def openFile(self, filename):
         self.arrayCode = util.load_file(filename)
+        self.code_from_array = functional.partial(util.code_from_array, self.arrayCode) # Currying
         self.interpreter = None
         self.set_interpreter()
         self.currentLine = self.interpreter.position
@@ -67,7 +70,7 @@ class MainWindow(object):
         self.updateStack()
 
     def updateCode(self):
-        self.codeTextBuffer.set_text(util.code_from_array(self.arrayCode, self.currentLine))
+        self.codeTextBuffer.set_text(self.code_from_array(self.currentLine))
         self.codeTextBuffer.apply_tag(self.textTag, self.codeTextBuffer.get_start_iter(), self.codeTextBuffer.get_end_iter())
         self.codeTextBuffer.apply_tag(self.selectedLine, self.codeTextBuffer.get_iter_at_line(self.currentLine), self.codeTextBuffer.get_iter_at_line(self.currentLine+1))
         self.codeTextView.set_buffer(self.codeTextBuffer)

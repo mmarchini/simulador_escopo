@@ -1,0 +1,19 @@
+DONE - Definição e uso de classes (sejam utilitárias ou para representar as estruturas de dados utilizadas pelo programa)
+- Encapsulamento e proteção dos atributos, com os devidos métodos de manipulação (setters/getters). Especificação de construtores-padrão para a inicialização dos atributos e, quando possível, construtores alternativos. Especificação de destrutores (ou métodos de clean-up), se necessário.
+DONE - Organização do código em espaços de nome diferenciados, conforme a função ou estrutura de cada classe.
+DONE - Mecanismo de herança, em especial:
+DONE * especicação de pelo menos três níveis de hierarquia, sendo uma classe mais genérica (e abstrata, ver a seguir)
+DONE * especificação de pelo menos uma classe abstrata (ou interface) a ser especializada (ou implementada) nas classes filhas
+DONE * demonstração de polimorfismo por inclusão (variável ou coleção genérica manipulando entidades de classes filhas, chamando métodos ou funções específicas correspondentes)
+DONE- Polimorfismo paramétrico:
+DONE * especificação de algoritmo (método ou função genérico) utilizando o recurso oferecido pela linguagem (p. ex., generics, templates);
+DONE * especificação de estrutura de dados genérica utilizando o recurso oferecido pela linguagem (p. ex., generics, templates);
+NOT - Polimorfismo por sobrecarga (vale construtores alternativos)
+DONE - Especificação e uso de funções como elementos de 1a ordem
+DONE - Especificação e uso de funções de ordem maior (map, reduce, foldr/foldl ou similares)
+DONE*CHECK* - Uso de listas para a manipulação de estruturas, entidades e elementos em funções de ordem maior. As funções devem ser puras, ou seja, devem criar novas listas (e não manipular as que são recebidas)
+- Especificação e uso de funções não nomeadas (ou lambda)
+DONE - Especificação e uso de funções que usem currying
+NOT - Especificação de funções que utilizem pattern matching na sua definição;
+DONE- Uso de recursão como mecanismo de iteração (pelo menos em funções de ordem maior que manipulem listas)
+- Especificação e uso de delegates
