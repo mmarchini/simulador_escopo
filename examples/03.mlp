@@ -19,6 +19,8 @@ if(var1 == var2):
     int var4
     var3 := func1(var3, var4)
     var2 := 6
+else:
+    var3 := var1*var2*var2+5
 endif
 
 if(var1 == var2):

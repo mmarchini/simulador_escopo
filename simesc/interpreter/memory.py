@@ -4,6 +4,7 @@ from stack import Stack
 class MemoryFrame(object):
     __callback = -1
     __function_name = ""
+    scope = None
     return_var = None
     parameters = []
 
@@ -11,11 +12,12 @@ class MemoryFrame(object):
     # Constructor #
     ###############    
     
-    def __init__(self, callback, function_name, parameters, returnvar=None):
+    def __init__(self, callback, function_name, parameters, scope, returnvar=None):
         self.callback = callback
         self.function_name = function_name
         self.return_var = returnvar 
         self.parameters=parameters
+        self.scope=scope
     
     ###########
     # Getters #
@@ -45,12 +47,14 @@ class Variable(object):
     name = ""
     vartype = None
     value = 0 
+    line = -1
     scope=[]
 
-    def __init__(self, name, vartype, scope):
+    def __init__(self, name, vartype, scope, line):
         self.name = name
         self.vartype = vartype
         self.scope = scope
+        self.line = line 
 
 class Memory(object):
     __metaclass__ = ABCMeta

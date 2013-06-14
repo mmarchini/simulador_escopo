@@ -16,5 +16,5 @@ class DynamicInterpreter(Interpreter):
 
     def variable(self, var):
         aux = self.mount.search(var, lambda a: a.name)
-        return aux and aux[-1] or None
+        return aux and aux[-1] or none
 

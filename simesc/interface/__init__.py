@@ -45,10 +45,17 @@ class MainWindow(object):
             if self.interpreterType.get_active() == 0 and\
                (type(self.interpreter) == StaticInterpreter or self.interpreter == None):
                 self.interpreter = DynamicInterpreter(self.arrayCode)
+                self.currentLine = self.interpreter.position
+                self.updateCode()
+                self.updateVariables()
+                self.updateStack()
             elif self.interpreterType.get_active() == 1 and\
                (type(self.interpreter) == DynamicInterpreter or self.interpreter == None):
                 self.interpreter = StaticInterpreter(self.arrayCode)
-
+                self.currentLine = self.interpreter.position
+                self.updateCode()
+                self.updateVariables()
+                self.updateStack()
 
     def openFile(self, filename):
         self.arrayCode = util.load_file(filename)
@@ -56,7 +63,9 @@ class MainWindow(object):
         self.set_interpreter()
         self.currentLine = self.interpreter.position
         self.updateCode()
-        
+        self.updateVariables()
+        self.updateStack()
+
     def updateCode(self):
         self.codeTextBuffer.set_text(util.code_from_array(self.arrayCode, self.currentLine))
         self.codeTextBuffer.apply_tag(self.textTag, self.codeTextBuffer.get_start_iter(), self.codeTextBuffer.get_end_iter())
@@ -71,6 +80,7 @@ class MainWindow(object):
             a = a + "Funcao: %s\n"%s.function_name
             a = a + "Callback: %s\n"%s.callback
             a = a + "Parametros: %s\n"%s.parameters
+            a = a + "Escopo de Chamada: %s\n"%s.scope
         self.stackTextBuffer.set_text(a)
         self.stackTextView.set_buffer(self.stackTextBuffer)
     
