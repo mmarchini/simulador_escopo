@@ -1,5 +1,5 @@
 #coding=UTF-8
-
+import os.path
 import functional
 from gi.repository import Gtk
 
@@ -10,11 +10,11 @@ class MainWindow(object):
     arrayCode = None
     interpreter = None
     
-    def __init__(self):
+    def __init__(self, filename=""):
         # Carrega o template feito no glade
-        filename = "simesc/interface/templates/main.glade"
+        interface_filename = "simesc/interface/templates/main.glade"
         builder = Gtk.Builder()
-        builder.add_from_file(filename)
+        builder.add_from_file(interface_filename)
         self.builder=builder
         # Associa os eventos as suas respectivas funções
         self.builder.connect_signals(self)
@@ -42,6 +42,8 @@ class MainWindow(object):
         
         self.set_interpreter()
 
+        self.openFile(filename)
+
     def set_interpreter(self):
         if self.arrayCode:
             if self.interpreterType.get_active() == 0 and\
@@ -60,20 +62,24 @@ class MainWindow(object):
                 self.updateStack()
 
     def openFile(self, filename):
-        self.arrayCode = util.load_file(filename)
-        self.code_from_array = functional.partial(util.code_from_array, self.arrayCode) # Currying
-        self.interpreter = None
-        self.set_interpreter()
-        self.currentLine = self.interpreter.position
-        self.updateCode()
-        self.updateVariables()
-        self.updateStack()
+        if filename and os.path.isfile(filename):
+            self.arrayCode = util.load_file(filename)
+            self.code_from_array = functional.partial(util.code_from_array, self.arrayCode) # Currying
+            self.interpreter = None
+            self.set_interpreter()
+            self.currentLine = self.interpreter.position
+            self.updateCode()
+            self.updateVariables()
+            self.updateStack()
+        elif filename:
+            print "Arquivo nao encontrado:", filename
 
     def updateCode(self):
         self.codeTextBuffer.set_text(self.code_from_array(self.currentLine))
         self.codeTextBuffer.apply_tag(self.textTag, self.codeTextBuffer.get_start_iter(), self.codeTextBuffer.get_end_iter())
         self.codeTextBuffer.apply_tag(self.selectedLine, self.codeTextBuffer.get_iter_at_line(self.currentLine), self.codeTextBuffer.get_iter_at_line(self.currentLine+1))
         self.codeTextView.set_buffer(self.codeTextBuffer)
+        print self.interpreter.scope
         
     def updateStack(self):
         stack = self.interpreter.stack
@@ -99,7 +105,7 @@ class MainWindow(object):
         Gtk.main_quit(*args)
 
     def onStepClick(self, widget):
-        self.interpreter.step()
+        self.interpreter.step() # Delegate
         self.currentLine = self.interpreter.position 
         self.updateCode()
         self.updateStack()

@@ -7,10 +7,12 @@ import syntax
 
 class Interpreter(Memory):
     '''
-    Classe que define os métodos e atributos básicos para um interpretador
+    Classe abstrata que define os métodos e atributos básicos para um interpretador,
+    deixando os métodos que retornam variáveis como métodos abstratos, pois a implementação
+    dos mesmos define se o interpretador possuí escopo estático ou dinâmico.
     '''
 
-    scope = []
+    __scope = []
 
     ###############
     # Constructor #
@@ -18,6 +20,22 @@ class Interpreter(Memory):
 
     def __init__(self, code=None, **kw):
         super(Interpreter, self).__init__(code, **kw)
+
+    ###########
+    # Getters #
+    ###########
+
+    @property
+    def scope(self):
+        return copy.deepcopy(self.__scope)
+
+    ###########
+    # Setters #
+    ###########
+
+    @scope.setter
+    def scope(self, value):
+        self.__scope = value
 
     ##############################
     # Instance Protected Methods #
@@ -30,17 +48,20 @@ class Interpreter(Memory):
         self.position = self._eval_line(self.position)
 
     def _eval_line(self, i):
+        """
+        Esse método é responsável por executar o código presente na linha 'i' do interpretador. 
+        """
         # IF
         if re.compile(syntax.ifline).match(self.code[i]):
             boolexpr = re.compile(syntax.ifline).match(self.code[i]).groups()[0]
             if eval(boolexpr, self.variables):
-                self.scope.append("if")
+                self.scope = self.scope + ["if"]
             else:
                 flag = True 
                 while (flag):
                     i=i+1
                     if re.compile(syntax.elseline).match(self.code[i]):
-                        self.scope.append("else")
+                        self.scope = self.scope + ["else"]
                         flag=False
                     elif re.compile(syntax.endif).match(self.code[i]):
                         flag=False
@@ -50,6 +71,7 @@ class Interpreter(Memory):
             while not (re.compile(syntax.endif).match(self.code[i])):
                 i = i+1
             self.position = i
+            self.destroy_current_scope()
         # ENDIF
         elif re.compile(syntax.endif).match(self.code[i]):
             self.destroy_current_scope()
@@ -65,16 +87,16 @@ class Interpreter(Memory):
             self.position = i
         # RETURN
         elif re.compile(syntax.returnline).match(self.code[i]):
-            mf = self.stack.pull()
+            mf = self._stack.pull()
             if mf.return_var:
-                mf.return_var.value = eval(re.compile(syntax.returnline).match(self.code[i]).groups()[0], self.variables)
+                mf._MemoryFrame__return_var.value = eval(re.compile(syntax.returnline).match(self.code[i]).groups()[0], self.variables)  # Quebrando encapsulamento por uma boa causa
             self.destroy_current_scope()
             self.position = mf.callback
             self.scope = mf.scope
             i = mf.callback
         # END FUNCTION
         elif re.compile(syntax.endfunc).match(self.code[i]):
-            mf = self.stack.pull()
+            mf = self._stack.pull()
             if mf.return_var:
                 raise Exception
             self.destroy_current_scope()
@@ -100,8 +122,8 @@ class Interpreter(Memory):
             func_groups = re.compile(syntax.func).match(expr).groups()
             func_attrs = [eval(a, self.variables) for a in func_groups[1].replace(" ", "").split(",")]
             mf = MemoryFrame(callback=self.position, parameters=func_attrs, scope=self.scope, function_name=func_groups[0])
-            self.stack.push(mf)
-            self.scope.append(func_groups[0])
+            self._stack.push(mf)
+            self.scope = self.scope + [func_groups[0]]
             self.position = self.variable(func_groups[0]).value
             self.scope= self.variable(func_groups[0]).scope
             params = re.compile(" *, *").split(re.compile(syntax.deffunc).match(self.code[self.position]).groups()[1])
@@ -116,27 +138,29 @@ class Interpreter(Memory):
         # ERRO DE SINTAXE
         else:
             raise SyntaxError
-
-        #Gambi master
         if i == self.position:
             return i 
         else:
             return self.position
             
-
     def _declare(self, varname, varvalue):
+        """
+        Esse método é responsável por atribuir valores as variáveis.
+        """
         var = self.variable(varname)
         expr = varvalue 
         if var:
-            # Função
+            """
+            Verifica qual o tipo da atribuição
+            """
+            # Retorno de Função
             if re.compile(syntax.func).match(expr):
                 #TODO armazenar a variável que vai ser alterada na pilha, e a linha atual
                 func_groups = re.compile(syntax.func).match(expr).groups()
                 func_attrs = [eval(a, self.variables) for a in func_groups[1].replace(" ", "").split(",")]
-                print self.scope
                 mf = MemoryFrame(callback=self.position, returnvar=var, parameters=func_attrs, scope=self.scope, function_name=func_groups[0])
-                self.stack.push(mf)
-                self.scope.append(func_groups[0])
+                self._stack.push(mf)
+                self.scope = self.scope + [func_groups[0]]
                 self.position = self.variable(func_groups[0]).value
                 params = re.compile(" *, *").split(re.compile(syntax.deffunc).match(self.code[self.position]).groups()[1])
                 for i,param in enumerate(params):
@@ -145,7 +169,7 @@ class Interpreter(Memory):
                     param_var = self.variable(param[1])
                     param_var.value = func_attrs[i]
 
-            # Expressão
+            # Avaliação de uma Expressão Aritmética
             elif re.compile(syntax.aritexpr).match(expr):
                 var.value = eval(expr, self.variables)
 
@@ -170,17 +194,27 @@ class Interpreter(Memory):
     ###########################
 
     def step(self):
+        """
+        Método responsável por executar a linha atual e avançar para a próxima linha.
+        """
         if self.position < len(self.code):
             self._eval_current_line()
             self._increment_position()
 
     def define_variable(self, name, vartype):
+        """
+        Método responsável por alocar uma variável no monte.
+        """
         if name == "int":
             raise Exception
-        var = Variable(name, vartype, copy.deepcopy(self.scope), self.position)
-        self.mount.push(var)
+        var = Variable(name, vartype, self.scope, self.position)
+        self._mount.push(var)
 
     def destroy_current_scope(self):
-        self.mount.remove(self.scope, lambda a: a.scope)
-        self.scope.pop()
+        """
+        Método responsável por apagar todas as variáveis que foram alocadas no monte no escopo atual,
+        e voltar para o escopo anterior.
+        """
+        self._mount.remove(self.scope, lambda a: a.scope)
+        self.scope = self.scope[:-1]
 

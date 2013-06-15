@@ -5,6 +5,11 @@ Implementação de uma classe de Pilha parametrizada
 import copy
 
 class Stack(object):
+    """
+    Classe de Pilha.
+    O Tipo dos Elementos da Pilha é definido na criação do Objeto da Classe,
+    e todos os elementos alocados nessa pilha devem ser do tipo escolhido.
+    """
     ##############
     # Attributes #
     ##############

@@ -1,7 +1,6 @@
-teste1="-1*((1+2)/3)*(3+2) -5"
-teste2="((1+2)/3)*(3+2) -5a"
-teste3="((1+2)/3)*(3+2) -5"
-
+"""
+Expressões regulares utilizadas para avaliar a sintaxe da linguagem.
+"""
 aoperadores="(?:\+|\-|\*|/)"
 boperadores="(?:(?:and)|(?:or)|(?:==)|(?:\>={0,1})|(?:\<={0,1})|(?:not)|(?:!=))"
 types="(?:(?:int)|(?:float)|(?:void))"

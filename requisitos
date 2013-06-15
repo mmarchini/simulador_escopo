@@ -12,8 +12,8 @@ NOT - Polimorfismo por sobrecarga (vale construtores alternativos)
 DONE - Especificação e uso de funções como elementos de 1a ordem
 DONE - Especificação e uso de funções de ordem maior (map, reduce, foldr/foldl ou similares)
 DONE*CHECK* - Uso de listas para a manipulação de estruturas, entidades e elementos em funções de ordem maior. As funções devem ser puras, ou seja, devem criar novas listas (e não manipular as que são recebidas)
-- Especificação e uso de funções não nomeadas (ou lambda)
+DONE - Especificação e uso de funções não nomeadas (ou lambda)
 DONE - Especificação e uso de funções que usem currying
 NOT - Especificação de funções que utilizem pattern matching na sua definição;
-DONE- Uso de recursão como mecanismo de iteração (pelo menos em funções de ordem maior que manipulem listas)
-- Especificação e uso de delegates
+DONE - Uso de recursão como mecanismo de iteração (pelo menos em funções de ordem maior que manipulem listas)
+DONE - Especificação e uso de delegates

@@ -2,7 +2,9 @@
 from interpreter import Interpreter
 
 class DynamicInterpreter(Interpreter):
-    
+    """
+    Extensão da classe Interpretador para criar um Interpretador de Escopo Dinâmico.
+    """
     def __init__(self, code, **kw):
         super(DynamicInterpreter, self).__init__(code, **kw)
  
@@ -15,6 +17,6 @@ class DynamicInterpreter(Interpreter):
         return b 
 
     def variable(self, var):
-        aux = self.mount.search(var, lambda a: a.name)
+        aux = self._mount.search(var, lambda a: a.name)
         return aux and aux[-1] or none
 
