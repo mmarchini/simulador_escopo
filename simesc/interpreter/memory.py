@@ -1,3 +1,4 @@
+#coding=utf-8
 from abc import ABCMeta, abstractmethod, abstractproperty
 from stack import Stack
 from copy import deepcopy

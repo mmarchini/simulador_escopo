@@ -1,3 +1,4 @@
+#coding=utf-8
 """
 Expressões regulares utilizadas para avaliar a sintaxe da linguagem.
 """

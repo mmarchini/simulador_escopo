@@ -75,7 +75,8 @@ class MainWindow(object):
             print "Arquivo nao encontrado:", filename
 
     def updateCode(self):
-        self.codeTextBuffer.set_text(self.code_from_array(self.currentLine))
+        aux_code_from_array = functional.partial(util._code_from_array, self.currentLine)
+        self.codeTextBuffer.set_text(self.code_from_array(aux_code_from_array))
         self.codeTextBuffer.apply_tag(self.textTag, self.codeTextBuffer.get_start_iter(), self.codeTextBuffer.get_end_iter())
         self.codeTextBuffer.apply_tag(self.selectedLine, self.codeTextBuffer.get_iter_at_line(self.currentLine), self.codeTextBuffer.get_iter_at_line(self.currentLine+1))
         self.codeTextView.set_buffer(self.codeTextBuffer)

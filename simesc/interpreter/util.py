@@ -1,15 +1,18 @@
 #coding=UTF-8
 from functional import foldl
 
-def _code_from_array(array, i=0):
+def _code_from_array(arrow_line, array, i=0):
     """
     Função Recursiva auxiliar responsável por adicionar os números nas linhas do código.
     """
     if i>=len(array):
         return [] 
-    return [str(array[i])%(" "*(2+len(str(len(array)))-len(str(i))), i)]+_code_from_array(array, i+1)
+    elif i==arrow_line:
+        return [str(array[i])%(">"+" "*(1+len(str(len(array)))-len(str(i))), i)]+_code_from_array(arrow_line, array, i+1)
+    else:
+        return [str(array[i])%(" "*(2+len(str(len(array)))-len(str(i))), i)]+_code_from_array(arrow_line, array, i+1)
 
-def code_from_array(array, arrow_line=-1):
+def code_from_array(array, format_function):
     """
     Função de Primeira Ordem, pura, onde será aplicado o conceito de Currying.
     Utilização do Lambda e das funções de ordem maior map e foldl
@@ -17,7 +20,7 @@ def code_from_array(array, arrow_line=-1):
     """
     spaces = len(str(len(array)))
     new_array = map(lambda a: "%s%d "+a, array) 
-    new_array = _code_from_array(new_array) 
+    new_array = format_function(new_array)
     code = foldl(lambda a,b: a+b, "", new_array)
     return code
 
